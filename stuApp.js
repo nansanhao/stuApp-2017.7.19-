@@ -19,8 +19,9 @@ function appInit() {
         case '3':exit=0;break;
     }
     }
-    console.log("thanks");
+    console.log("感谢使用");
 }
+
 function addStu(stuArray) {
 
     let stu=readlineSync.question("请输入学生信息(格式：姓名,学号,民族,班级,学科:成绩...)，按回车提交:");
@@ -40,7 +41,25 @@ function addStu(stuArray) {
 function printSheet(stuArray) {
     let stu=readlineSync.question("请输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：");
     let temp=stu.split(',');
+    while(1){
+        let flag=0;
+
+        for(let i in temp){
+            if(isStuNum(temp[i])==false){
+                flag=1;
+            }
+        }
+        if(flag==0){
+            break;
+        }else {
+            stu=readlineSync.question("请正确输入要打印的学生的学号（格式： 学号, 学号,...），按回车提交：");
+            temp=stu.split(',');
+        }
+    }
+
     let stuToPrint=stuArray.slice();
+
+
     for (let i=stuToPrint.length-1;i>=0;i--) {
         if (temp.indexOf(stuArray[i][1]) == -1) {
             stuToPrint.splice(i,1);
@@ -151,3 +170,9 @@ function getSubjectArray(stuArray) {
     }
     return subjectArray;
 }
+function isStuNum(stuNum) {
+
+    return /^[A-Z]{1}[0-9]{4,9}/.test(stuNum);
+
+}
+
